@@ -2,7 +2,9 @@
 # Gradle start up script for UN*X
 
 # Add default JVM options here
-DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
+# Quotes around the options were causing them to be interpreted as a class name
+# by the JVM in this environment, so we pass them directly instead.
+DEFAULT_JVM_OPTS='-Xmx64m -Xms64m'
 
 APP_NAME="Gradle"
 APP_BASE_NAME=$(basename "$0")
