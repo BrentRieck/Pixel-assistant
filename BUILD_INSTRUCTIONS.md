@@ -70,10 +70,8 @@ APK Location: `app/build/outputs/apk/debug/app-debug.apk`
 
 ### Issue: SDK Not Found
 **Solution**:
-- Create `local.properties` in project root:
-  ```
-  sdk.dir=/path/to/Android/Sdk
-  ```
+- Copy `local.properties.example` to `local.properties` in the project root and set `sdk.dir` to your installed SDK path (for
+  example, `/home/<user>/Android/Sdk` on Linux/macOS or `C:\\Users\\<user>\\AppData\\Local\\Android\\Sdk` on Windows).
 
 ### Issue: Memory Error During Build
 **Solution**:

@@ -1,0 +1,6 @@
+# Copy this file to local.properties and update sdk.dir to your Android SDK installation path.
+# Example SDK locations:
+#  - Linux/macOS: /home/USER/Android/Sdk
+#  - Windows: C:\\Users\\USER\\AppData\\Local\\Android\\Sdk
+# Building requires the Android SDK platform tools and API 34 platform installed.
+sdk.dir=/absolute/path/to/Android/Sdk
