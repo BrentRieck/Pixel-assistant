@@ -19,6 +19,10 @@ class EdgeAIManager(private val context: Context) {
     
     private var generativeModel: GenerativeModel? = null
     private var isInitialized = false
+    private val systemPrompt = """You are a helpful AI assistant running completely on-device on a Pixel 10 Pro XL.\n""" +
+        """You have access to the device's camera, microphone, and sensors.\n""" +
+        """Provide concise, accurate, and contextual responses.\n""" +
+        """Prioritize user privacy - all processing happens locally."""
     
     companion object {
         private const val TAG = "EdgeAIManager"
@@ -38,17 +42,10 @@ class EdgeAIManager(private val context: Context) {
                 topP = 0.95f
                 maxOutputTokens = 2048
             }
-            
+
             generativeModel = GenerativeModel(
                 modelName = MODEL_NAME,
-                generationConfig = config,
-                // For true on-device processing on Pixel
-                systemInstruction = content {
-                    text("""You are a helpful AI assistant running completely on-device on a Pixel 10 Pro XL.
-                        You have access to the device's camera, microphone, and sensors.
-                        Provide concise, accurate, and contextual responses.
-                        Prioritize user privacy - all processing happens locally.""")
-                }
+                generationConfig = config
             )
             
             isInitialized = true
@@ -75,8 +72,13 @@ class EdgeAIManager(private val context: Context) {
         
         try {
             Log.d(TAG, "Generating response for prompt: ${prompt.take(50)}...")
-            
-            val response = generativeModel?.generateContentStream(prompt)
+
+            val response = generativeModel?.generateContentStream(
+                content {
+                    text(systemPrompt)
+                    text(prompt)
+                }
+            )
             
             response?.collect { chunk ->
                 chunk.text?.let { text ->
@@ -106,8 +108,9 @@ class EdgeAIManager(private val context: Context) {
         
         try {
             Log.d(TAG, "Analyzing image with prompt: $prompt")
-            
+
             val inputContent = content {
+                text(systemPrompt)
                 image(bitmap)
                 text(prompt)
             }
@@ -147,8 +150,13 @@ class EdgeAIManager(private val context: Context) {
                 contextBuilder.append("${msg.role}: ${msg.content}\n")
             }
             contextBuilder.append("User: $newMessage")
-            
-            val response = generativeModel?.generateContentStream(contextBuilder.toString())
+
+            val response = generativeModel?.generateContentStream(
+                content {
+                    text(systemPrompt)
+                    text(contextBuilder.toString())
+                }
+            )
             
             response?.collect { chunk ->
                 chunk.text?.let { text ->
