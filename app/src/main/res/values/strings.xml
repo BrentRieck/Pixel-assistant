@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pixel Assistant</string>
+    <string name="on_device_ai">On-Device AI</string>
+    <string name="powered_by_gemini">Powered by Gemini Nano</string>
+    <string name="ask_anything">Ask me anything…</string>
+    <string name="send">Send</string>
+    <string name="clear_conversation">Clear Conversation</string>
+    <string name="add_image">Add Image</string>
+    <string name="permissions_required">Permissions Required</string>
+    <string name="grant_permissions">Grant Permissions</string>
+</resources>
